@@ -1,18 +1,14 @@
 # Noise2Self: Blind Denoising by Self-Supervision
 
-In addition to the supplementary text, `supplement.pdf`, this folder contains:
+This repo demonstrates a framework for blind denoising based on self-supervision, 
+as described in the paper.
 
-Notebooks for:
+> We propose a general framework for denoising high-dimensional measurements which requires no prior on the signal, no estimate of the noise, and no clean training data. The only assumption is that the noise exhibits statistical independence across different dimensions of the measurement. Moreover, our framework is not restricted to a particular denoising model. We show how it can be used to calibrate any parameterised denois- ing algorithm, from the single hyperparameter of a median filter to the millions of weights of a deep neural network. We demonstrate this on natural image and microscopy data, where we exploit noise independence between pixels, and on single-cell gene expression data, where we exploit independence between detections of indi- vidual molecules. Finally, we prove a theoretical lower bound on the performance of an optimal denoiser. This framework generalizes recent work on training neural nets from noisy images and on cross-validation for matrix factorization.
 
-1. Calibrating median filter, wavelet denoisers, and NL-means.
-2. Simulating Gaussian Processes
-3. Generating a GP from a Template dataset and comparing optimal inference.
-4. Fitting a linear model to single-cell sequencing data
+The notebook [Intro to Calibration](notebooks/Intro%20to%20Calibration.ipynb) shows how to calibrate any traditional denoising model, such as median filtering, wavelet thresholding, or non-local means. We use the excellent [scikit-image](www.scikit-image.org) implementations of these methods.
 
-These are in the `notebooks` folder.
+The notebook [Intro to Neural Nets](notebooks/Intro%20to%20Neural%20Nets.ipynb) shows how to train a denoising neural net using a self-supervised loss, on the simple example of MNIST digits. The notebook runs in less than a minute, on CPU, on a MacBook Pro. We implement this in [pytorch](www.pytorch.org).
 
-There are also two files, `mask.py` and `train.py`, which demonstrate
-the procedure for training masked neural networks used in Section 5 of the paper.
-To run they require additional infrastructure, but the core choices are
-implemented here in simple `pytorch` code, and we hope they clarify the
-method. Models used are in the `models` folder.
+Dependencies are in the `environment.yml` file.
+
+The remaining notebooks generate figures from the paper.
