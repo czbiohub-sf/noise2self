@@ -68,9 +68,9 @@ def plot_grid(images, height, width, **kwargs):
                 ax[j].get_yaxis().set_ticks([])
     fig
 
-def show(image):
+def show(image, **kwargs):
     import matplotlib.pyplot as plt
-    plt.imshow(image, cmap=plt.cm.gray)
+    plt.imshow(image, cmap=plt.cm.gray, **kwargs)
     plt.gca().get_xaxis().set_ticks([])
     plt.gca().get_yaxis().set_ticks([])
 
