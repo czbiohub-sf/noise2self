@@ -11,8 +11,8 @@ class BabyUnet(nn.Module):
         self.pool1 = nn.MaxPool2d(kernel_size=2)
         self.pool2 = nn.MaxPool2d(kernel_size=2)
 
-        self.up1 = lambda x: F.interpolate(x, mode='bilinear', scale_factor=2)
-        self.up2 = lambda x: F.interpolate(x, mode='bilinear', scale_factor=2)
+        self.up1 = lambda x: F.interpolate(x, mode='bilinear', scale_factor=2, align_corners=False)
+        self.up2 = lambda x: F.interpolate(x, mode='bilinear', scale_factor=2, align_corners=False)
 
         self.conv1 = ConvBlock(n_channel_in, width)
         self.conv2 = ConvBlock(width, 2*width)
