@@ -20,19 +20,39 @@ def show_tensor(tensor, cmap='magma', scale=False):
     else:
         plt.imshow(im.transpose((1, 2, 0)))
 
+
+def tensor_to_numpy(x):
+    x = x.detach().cpu().numpy()
+    if x.ndim == 4:
+        x = x[0]
+    if x.ndim == 2:
+        return x
+
+    if x.shape[0] == 1:
+        return x[0]
+    elif x.shape[0] == 3:
+        return x.transpose((1, 2, 0))
+    else:
+        raise
+
+
 def plot_tensors(tensor_list, titles=None):
-    image_list = [tensor.detach().cpu().numpy().reshape(tensor.shape[-2], tensor.shape[-1]) for tensor in tensor_list]
+    color = True if tensor_list[0].shape[1] == 3 else False
+    image_list = [tensor_to_numpy(tensor) for tensor in tensor_list]
     width = len(image_list)
     fig, ax = plt.subplots(1, width, sharex='col', sharey='row', figsize=(width * 4, 4))
 
     for i in range(width):
-        ax[i].imshow(image_list[i], cmap='Greys_r')
+        if image_list[i].ndim == 2:
+            ax[i].imshow(image_list[i], cmap='Greys_r')
+        else:
+            ax[i].imshow(image_list[i])
         if titles:
             ax[i].set_title(titles[i])
         ax[i].get_xaxis().set_ticks([])
         ax[i].get_yaxis().set_ticks([])
     fig
-    
+
 def show_data(datapt):
     # For datasets of the form (noise1, noise2, ground truth), shows all three concatenated
     show_tensor(torch.cat((datapt[0], datapt[1], datapt[2]), dim=2))
