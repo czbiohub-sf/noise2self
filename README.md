@@ -21,9 +21,9 @@ Because the self-supervised loss is much easier to implement than the data loadi
 
 ```
 for i, batch in enumerate(data_loader):
-    x, y = batch
-    output = model(x)
-    loss = loss_function(output, y)
+    noisy_images, clean_images = batch
+    output = model(noisy_images)
+    loss = loss_function(output, clean_images)
 ```
 
 ### Self-Supervised Learning
@@ -32,12 +32,10 @@ for i, batch in enumerate(data_loader):
 from mask import Masker
 masker = Masker()
 for i, batch in enumerate(data_loader):
-    x, _ = batch
-    
+    noisy_images, _ = batch
     input, mask = masker.mask(noisy_images, i)
     output = model(input)
-    
-    loss = loss_function(output*mask, x*mask)
+    loss = loss_function(output*mask, noisy_images*mask)
 ```
 
 Dependencies are in the `environment.yml` file.
