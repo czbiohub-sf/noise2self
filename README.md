@@ -15,6 +15,8 @@ The notebook [Intro to Calibration](notebooks/Intro%20to%20Calibration.ipynb) sh
 
 The notebook [Intro to Neural Nets](notebooks/Intro%20to%20Neural%20Nets.ipynb) shows how to train a denoising neural net using a self-supervised loss, on the simple example of MNIST digits. The notebook runs in less than a minute, on CPU, on a MacBook Pro. We implement this in [pytorch](www.pytorch.org).
 
+The notebook [Single Shot Denoising](notebooks/Single-Shot%20Denoising.ipynb) demonstrates that there is enough information in a single 512x512 noisy image for a deep neural net to learn to denoise it, with performance better than classical blind image denoisers.
+
 Because the self-supervised loss is much easier to implement than the data loading, GPU management, logging, and architecture design required for handling any particular dataset, we recommend that you take any existing pipeline for your data and simply modify the training loop.
 
 ### Traditional Supervised Learning
