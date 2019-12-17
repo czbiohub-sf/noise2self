@@ -29,7 +29,7 @@ class BabyUnet(nn.Module):
         x = self.pool1(c1)
         c2 = self.conv2(x)
         x = self.pool2(c2)
-        self.conv3(x)
+        x = self.conv3(x)
 
         x = self.up1(x)
         x = torch.cat([x, c2], 1)
