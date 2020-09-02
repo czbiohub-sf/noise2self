@@ -13,7 +13,7 @@ class Masker():
         self.infer_single_pass = infer_single_pass
         self.include_mask_as_input = include_mask_as_input
 
-    def mask(self, X, i):
+    def mask(self, X, i, channels=1):
 
         phasex = i % self.grid_size
         phasey = (i // self.grid_size) % self.grid_size
@@ -23,7 +23,7 @@ class Masker():
         mask_inv = torch.ones(mask.shape).to(X.device) - mask
 
         if self.mode == 'interpolate':
-            masked = interpolate_mask(X, mask, mask_inv)
+            masked = interpolate_mask(X, mask, mask_inv, channels)
         elif self.mode == 'zero':
             masked = X * mask_inv
         else:
@@ -72,13 +72,14 @@ def pixel_grid_mask(shape, patch_size, phase_x, phase_y):
     return torch.Tensor(A)
 
 
-def interpolate_mask(tensor, mask, mask_inv):
+def interpolate_mask(tensor, mask, mask_inv, channels=1):
     device = tensor.device
 
     mask = mask.to(device)
 
     kernel = np.array([[0.5, 1.0, 0.5], [1.0, 0.0, 1.0], (0.5, 1.0, 0.5)])
     kernel = kernel[np.newaxis, np.newaxis, :, :]
+    kernel = np.tile(kernel, (1, channels, 1, 1))
     kernel = torch.Tensor(kernel).to(device)
     kernel = kernel / kernel.sum()
 
